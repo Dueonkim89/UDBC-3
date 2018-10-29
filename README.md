@@ -6,14 +6,50 @@ Blockchain has the potential to change the way that the world approaches data. D
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
+## Node.js Framework
+Express.js
+
 ## Setup
 
 Clone or download the repository
 
-Install dependencies
+Install dependencies and run server script
 - npm install
+- npm run server (Project will be on port 8000)
+
 
 ## Testing
+
+#### Endpoints
+Easiest way to test the endpoints would be with postman or you can use the fetch API.
+
+- GET Response http://localhost:8000/block/[blockheight]
+
+```
+fetch('http://localhost:8000/block/1')
+  .then(response => response.json())
+    .then(data => console.log(data))
+      .catch(error => console.log(error));
+```
+
+- POST Response http://localhost:8000/block
+
+```
+var url = 'http://localhost:8000/block';
+var data = {data: 'Creating a new block'};
+
+fetch(url, {
+  method: 'POST',
+  body: JSON.stringify(data), 
+  headers:{
+    'Content-Type': 'application/json'
+  }
+}).then(res => res.json())
+   .then(response => console.log(response))
+    .catch(error => console.log(error));
+```
+
+#### IMPORTANT: Test file will not run if you run server first. So please cancel the server script and run test file first!
 
 To test code:
 
@@ -31,9 +67,9 @@ node
 
 1: To add a block: addBlock(newBlock)
 ```
-This method MUST take a new instance of Block as the argument. 
+This method will return a promise and MUST take a new instance of Block as the argument. 
 
-Example: myBlockChain.addBlock(new Block('this is the block body'));
+Example: myBlockChain.addBlock(new Block('this is the block body')).then(block => // Do whatever you want with the block you just created);
 ```
 2: Get block height: getBlockHeight()
 ```
