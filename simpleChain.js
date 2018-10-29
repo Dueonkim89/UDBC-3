@@ -27,7 +27,7 @@ class Blockchain{
   
   // Add new block
   addBlock(newBlock){
-	getLevelDB().then(dataSet => {  
+	return getLevelDB().then(dataSet => {  
 		// Block height
 		newBlock.height = dataSet.length;
 		// UTC timestamp
@@ -42,6 +42,7 @@ class Blockchain{
 		newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
 		//persist the data to levelDB. NOTE: MUST BE STRINGIFIED FIRST SO WE CAN PARSE LATER!
 		addDataToLevelDB(JSON.stringify(newBlock));
+		return Promise.resolve(newBlock);
 	}).catch(error => console.log('Unable to add block.'));			
   }
   
