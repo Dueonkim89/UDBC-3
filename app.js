@@ -17,6 +17,16 @@ app.get("/block/:height", (req, res) => {
 	}).catch(error => res.status(400).send(error));				
 });
 
+app.post("/block", (req,res) => {
+	const blockData = req.body.data;
+	if (!blockData) {
+		res.status(404).send('Please provide a block body');
+	} else {
+		newBlockChain.addBlock(new Block(blockData)).then(block => {
+			res.send(block);
+		}).catch(error => res.status(400).send(error));	
+	}
+});
 
 app.listen(port, () => {
 	console.log(`listening on port ${port}`);
